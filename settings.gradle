@@ -1,0 +1,4 @@
+rootProject.name = 'hibernate-spring-lazy-persistence'
+
+include 'hibernate4'
+include 'hibernate5'

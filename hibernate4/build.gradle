@@ -1,0 +1,10 @@
+dependencies {
+
+    testCompile 'org.springframework:spring-context:4.1.4.RELEASE'
+    testCompile 'org.springframework:spring-jdbc:4.1.4.RELEASE'
+    testCompile 'org.springframework:spring-orm:4.1.4.RELEASE'
+    testCompile 'org.springframework:spring-test:4.1.4.RELEASE'
+
+    testCompile 'org.hibernate:hibernate-core:4.3.11.Final'
+
+}

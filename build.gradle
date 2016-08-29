@@ -1,0 +1,24 @@
+
+allprojects {
+
+    repositories {
+        jcenter()
+    }
+
+    apply plugin: 'idea'
+
+}
+
+subprojects {
+
+    apply plugin: 'java'
+
+    dependencies {
+
+        testCompile 'junit:junit:4.12'
+
+        testCompile 'com.h2database:h2:1.4.192'
+
+    }
+
+}
