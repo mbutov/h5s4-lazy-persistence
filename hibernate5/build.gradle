@@ -1,10 +1,5 @@
 dependencies {
 
-    testCompile 'org.springframework:spring-context:4.3.2.RELEASE'
-    testCompile 'org.springframework:spring-jdbc:4.3.2.RELEASE'
-    testCompile 'org.springframework:spring-orm:4.3.2.RELEASE'
-    testCompile 'org.springframework:spring-test:4.3.2.RELEASE'
-
     testCompile 'org.hibernate:hibernate-core:5.2.2.Final'
 
 }

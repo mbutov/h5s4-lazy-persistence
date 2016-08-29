@@ -1,4 +1,4 @@
-package org.hslp.h4;
+package org.hslp.hibernate4;
 
 import org.hibernate.SessionFactory;
 import org.junit.Test;

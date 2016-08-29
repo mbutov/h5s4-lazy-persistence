@@ -17,6 +17,11 @@ subprojects {
 
         testCompile 'junit:junit:4.12'
 
+        testCompile 'org.springframework:spring-context:4.3.2.RELEASE'
+        testCompile 'org.springframework:spring-jdbc:4.3.2.RELEASE'
+        testCompile 'org.springframework:spring-orm:4.3.2.RELEASE'
+        testCompile 'org.springframework:spring-test:4.3.2.RELEASE'
+
         testCompile 'com.h2database:h2:1.4.192'
 
     }
