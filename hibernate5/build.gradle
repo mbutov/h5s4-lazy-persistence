@@ -1,5 +1,6 @@
 dependencies {
 
-    testCompile 'org.hibernate:hibernate-core:5.2.2.Final'
+    compile project(':common')
+    compile 'org.hibernate:hibernate-core:5.2.2.Final'
 
 }

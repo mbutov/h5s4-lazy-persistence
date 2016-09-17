@@ -1,4 +1,4 @@
-package org.hslp.hibernate5;
+package org.hslp.common;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

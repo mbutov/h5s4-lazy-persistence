@@ -15,14 +15,21 @@ subprojects {
 
     dependencies {
 
-        testCompile 'junit:junit:4.12'
+        compile 'javax.validation:validation-api:1.1.0.Final'
+        compile 'javax.annotation:javax.annotation-api:1.2'
 
-        testCompile 'org.springframework:spring-context:4.3.2.RELEASE'
-        testCompile 'org.springframework:spring-jdbc:4.3.2.RELEASE'
-        testCompile 'org.springframework:spring-orm:4.3.2.RELEASE'
-        testCompile 'org.springframework:spring-test:4.3.2.RELEASE'
+        compile 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final'
 
-        testCompile 'com.h2database:h2:1.4.192'
+        compile 'com.google.guava:guava:19.0'
+
+        compile 'org.springframework:spring-context:4.3.2.RELEASE'
+        compile 'org.springframework:spring-jdbc:4.3.2.RELEASE'
+        compile 'org.springframework:spring-orm:4.3.2.RELEASE'
+        compile 'org.springframework:spring-test:4.3.2.RELEASE'
+
+        compile 'com.h2database:h2:1.4.192'
+
+        compile 'junit:junit:4.12'
 
     }
 
