@@ -25,6 +25,7 @@ subprojects {
         compile 'org.springframework:spring-context:4.3.2.RELEASE'
         compile 'org.springframework:spring-jdbc:4.3.2.RELEASE'
         compile 'org.springframework:spring-orm:4.3.2.RELEASE'
+        compile 'org.springframework:spring-aop:4.3.2.RELEASE'
         compile 'org.springframework:spring-test:4.3.2.RELEASE'
 
         compile 'com.h2database:h2:1.4.192'

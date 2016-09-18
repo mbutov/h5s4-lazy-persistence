@@ -25,13 +25,18 @@
         <property name="targetDataSource" ref="unsafeDataSource"/>
     </bean>
 
-    <bean id="lazySessionFactory" class="org.springframework.aop.framework.ProxyFactoryBean">
+    <bean id="lazySessionFactory" class="org.hslp.common.RawTargetAccessFactoryProxy">
         <property name="targetSource">
             <bean class="org.springframework.aop.target.LazyInitTargetSource">
                 <property name="targetBeanName">
                     <idref bean="sessionFactoryBean"/>
                 </property>
             </bean>
+        </property>
+        <property name="interfaces">
+            <array>
+                <value>org.hibernate.SessionFactory</value>
+            </array>
         </property>
     </bean>
 

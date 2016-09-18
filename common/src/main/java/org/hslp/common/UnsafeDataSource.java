@@ -4,8 +4,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.function.Supplier;
 
-import javax.sql.DataSource;
-
 import org.springframework.jdbc.datasource.DelegatingDataSource;
 
 import com.google.common.base.Throwables;
@@ -35,16 +33,6 @@ public class UnsafeDataSource extends DelegatingDataSource {
                 throw Throwables.propagate(e);
             }
         }
-    }
-
-    @Override
-    public DataSource getTargetDataSource() {
-        return super.getTargetDataSource();
-    }
-
-    @Override
-    public <T> T unwrap(Class<T> iface) throws SQLException {
-        return super.unwrap(iface);
     }
 
     @Override
