@@ -35,7 +35,7 @@ public abstract class AbstractLazyPersistenceTests {
         brakeConnection();
     }
 
-    @Test(expected = Exception.class)
+    @Test(expected = Throwable.class)
     public void testSqlException() throws Exception {
         unsafeDataSource.getConnection().getMetaData();
     }

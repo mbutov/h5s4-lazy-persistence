@@ -15,7 +15,7 @@ public abstract class AbstractLazyHibernate4Tests extends AbstractLazyPersistenc
     @Autowired
     protected HibernateTemplate hibernateTemplate;
 
-    @Test(expected = Exception.class)
+    @Test(expected = Throwable.class)
     public void testHibernateException() throws Exception {
         hibernateTemplate.execute(session -> session.createCriteria(PersistentObject.class).list());
     }
@@ -25,7 +25,7 @@ public abstract class AbstractLazyHibernate4Tests extends AbstractLazyPersistenc
         hibernateTemplate.execute(session -> null);
     }
 
-    @Test(expected = Exception.class)
+    @Test(expected = Throwable.class)
     public void testConnectionBroken() throws Exception {
         transactionTemplate.execute(status -> hibernateTemplate.save(new PersistentObject(newId())));
     }
@@ -46,12 +46,15 @@ public abstract class AbstractLazyHibernate4Tests extends AbstractLazyPersistenc
         transactionTemplate.execute(status -> hibernateTemplate.save(new PersistentObject(id1)));
 
         brakeConnection();
+        boolean success;
         try {
             transactionTemplate.execute(status -> hibernateTemplate.save(new PersistentObject(id2)));
-            Assert.fail();
+            success = true;
         }
-        catch (RuntimeException e) {
+        catch (Throwable e) {
+            success = false;
         }
+        Assert.assertFalse(success);
 
         restoreConnection();
 
