@@ -4,15 +4,12 @@ import org.hslp.common.AbstractLazyPersistenceTests;
 import org.hslp.common.PersistentObject;
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.HibernateTemplate;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  * @author Maxim Butov
  */
-@RunWith(SpringJUnit4ClassRunner.class)
 public abstract class AbstractLazyHibernate5Tests extends AbstractLazyPersistenceTests {
 
     @Autowired

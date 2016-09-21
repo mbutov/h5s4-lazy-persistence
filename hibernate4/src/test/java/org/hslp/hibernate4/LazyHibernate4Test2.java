@@ -8,7 +8,7 @@ import org.springframework.test.context.support.GenericXmlContextLoader;
 /**
  * @author Maxim Butov
  */
-@ContextConfiguration(loader = GenericXmlContextLoader.class, locations = "HibernateLazyPersistenceTest-context.xml")
+@ContextConfiguration(loader = GenericXmlContextLoader.class, locations = "hibernate4-context.xml")
 public class LazyHibernate4Test2 extends AbstractLazyHibernate4Tests {
 
     @Override
