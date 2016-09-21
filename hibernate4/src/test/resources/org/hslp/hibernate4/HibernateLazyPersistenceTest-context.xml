@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<beans
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.springframework.org/schema/beans"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <import resource="classpath:/org/hslp/common/common-context.xml"/>
+
+    <bean id="hibernateSessionFactoryBean" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean" lazy-init="true">
+        <property name="dataSource" ref="lazyConnectionDataSource"/>
+        <property name="annotatedClasses" ref="annotatedClasses"/>
+        <property name="hibernateProperties" ref="hibernateProperties"/>
+    </bean>
+
+    <bean id="hibernateTemplate" class="org.springframework.orm.hibernate4.HibernateTemplate">
+        <property name="sessionFactory" ref="lazySessionFactory"/>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="lazySessionFactory"/>
+    </bean>
+
+</beans>

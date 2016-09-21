@@ -3,11 +3,9 @@
 <beans
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns="http://www.springframework.org/schema/beans"
-        xmlns:tx="http://www.springframework.org/schema/tx"
-        xsi:schemaLocation="
-            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
-        ">
+        xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
     <bean id="dataSource" class="org.springframework.jdbc.datasource.SingleConnectionDataSource">
 
@@ -21,22 +19,26 @@
         <property name="targetDataSource" ref="dataSource"/>
     </bean>
 
-    <bean id="lazyConnectionDataSourceProxy" class="org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy">
+    <bean id="lazyConnectionDataSource" class="org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy">
         <property name="targetDataSource" ref="unsafeDataSource"/>
     </bean>
 
-    <bean id="lazySessionFactory" class="org.hslp.common.RawTargetAccessFactoryProxy">
+    <util:list id="annotatedClasses">
+        <value>org.hslp.common.PersistentObject</value>
+    </util:list>
+
+    <util:properties id="hibernateProperties">
+        <prop key="#{T(org.hibernate.cfg.AvailableSettings).DIALECT_RESOLVERS}">org.hibernate.engine.jdbc.dialect.internal.StandardDialectResolver</prop>
+        <prop key="#{T(org.hibernate.cfg.AvailableSettings).HBM2DDL_AUTO}">create</prop>
+    </util:properties>
+
+    <bean id="lazySessionFactory" class="org.hslp.common.RawTargetAccessProxyFactoryBean">
         <property name="targetSource">
             <bean class="org.springframework.aop.target.LazyInitTargetSource">
                 <property name="targetBeanName">
-                    <idref bean="sessionFactoryBean"/>
+                    <idref bean="hibernateSessionFactoryBean"/>
                 </property>
             </bean>
-        </property>
-        <property name="interfaces">
-            <array>
-                <value>org.hibernate.SessionFactory</value>
-            </array>
         </property>
     </bean>
 

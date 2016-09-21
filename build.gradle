@@ -1,9 +1,23 @@
+buildscript {
+    repositories {
+        jcenter()
+        maven {
+            url 'http://repo.spring.io/plugins-release'
+        }
+    }
+    dependencies {
+        classpath 'org.springframework.build.gradle:propdeps-plugin:0.0.7'
+    }
+}
 
 allprojects {
 
     repositories {
         jcenter()
     }
+
+    apply plugin: 'propdeps'
+    apply plugin: 'propdeps-idea'
 
     apply plugin: 'idea'
 
@@ -15,8 +29,8 @@ subprojects {
 
     dependencies {
 
-        compile 'javax.validation:validation-api:1.1.0.Final'
-        compile 'javax.annotation:javax.annotation-api:1.2'
+//        compile 'javax.validation:validation-api:1.1.0.Final'
+//        compile 'javax.annotation:javax.annotation-api:1.2'
 
         compile 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final'
 
