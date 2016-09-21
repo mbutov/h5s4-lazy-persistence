@@ -16,28 +16,28 @@ public abstract class AbstractLazyHibernate4Tests extends AbstractLazyPersistenc
     protected HibernateTemplate hibernateTemplate;
 
     @Test(expected = Throwable.class)
-    public void testHibernateException() throws Exception {
+    public void testHibernateException() throws Throwable {
         hibernateTemplate.execute(session -> session.createCriteria(PersistentObject.class).list());
     }
 
     @Test
-    public void testEmptySession() throws Exception {
+    public void testEmptySession() throws Throwable {
         hibernateTemplate.execute(session -> null);
     }
 
     @Test(expected = Throwable.class)
-    public void testConnectionBroken() throws Exception {
+    public void testConnectionBroken() throws Throwable {
         transactionTemplate.execute(status -> hibernateTemplate.save(new PersistentObject(newId())));
     }
 
     @Test
-    public void testConnectionRestored() throws Exception {
+    public void testConnectionRestored() throws Throwable {
         restoreConnection();
         transactionTemplate.execute(status -> hibernateTemplate.save(new PersistentObject(newId())));
     }
 
     @Test
-    public void testConnectionBrokenThenRestored() throws Exception {
+    public void testConnectionBrokenThenRestored() throws Throwable {
 
         String id1 = newId();
         String id2 = newId();
@@ -46,10 +46,9 @@ public abstract class AbstractLazyHibernate4Tests extends AbstractLazyPersistenc
         transactionTemplate.execute(status -> hibernateTemplate.save(new PersistentObject(id1)));
 
         brakeConnection();
-        boolean success;
+        boolean success = true;
         try {
             transactionTemplate.execute(status -> hibernateTemplate.save(new PersistentObject(id2)));
-            success = true;
         }
         catch (Throwable e) {
             success = false;

@@ -41,12 +41,12 @@ public abstract class AbstractLazyPersistenceTests {
     }
 
     @Test(expected = Throwable.class)
-    public void testSqlException() throws Exception {
+    public void testSqlException() throws Throwable {
         jdbcTemplate.execute(Connection::getMetaData);
     }
 
     @Test
-    public void testEmptyTransaction() throws Exception {
+    public void testEmptyTransaction() throws Throwable {
         transactionTemplate.execute(status -> null);
     }
 
