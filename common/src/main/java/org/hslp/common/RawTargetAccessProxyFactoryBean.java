@@ -4,12 +4,9 @@ import java.lang.reflect.Method;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.springframework.aop.RawTargetAccess;
-import org.springframework.aop.framework.AopProxy;
 import org.springframework.aop.framework.ProxyFactoryBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.core.InfrastructureProxy;
-import org.springframework.util.ClassUtils;
-import org.springframework.util.ReflectionUtils;
 
 /**
  * Расширение {@link ProxyFactoryBean}, добавляющее к прокси интерфейсы {@link InfrastructureProxy} и
@@ -35,20 +32,13 @@ public class RawTargetAccessProxyFactoryBean extends ProxyFactoryBean implements
         // нужно добавить RawTargetAccessInfrastructureProxy к списку интерфейсов
         if (getProxiedInterfaces().length == 0 && !isProxyTargetClass()) {
 
-            // самый короткий путь получить ProxyFactoryBean.proxyClassLoader
-            ClassLoader proxyClassLoader = (ClassLoader) getProxy(new AopProxy() {
-                @Override
-                public Object getProxy() {
-                    return ClassUtils.getDefaultClassLoader();
-                }
-
-                @Override
-                public Object getProxy(ClassLoader classLoader) {
-                    return classLoader != null ? classLoader : getProxy();
-                }
-            });
-
-            setInterfaces(ClassUtils.getAllInterfacesForClass(getTargetClass(), proxyClassLoader));
+            Class targetClass = getTargetClass();
+            if (targetClass.isInterface()) {
+                addInterface(targetClass);
+            }
+            else {
+                setInterfaces(targetClass.getInterfaces());
+            }
 
         }
 

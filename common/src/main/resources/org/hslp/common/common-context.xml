@@ -23,6 +23,10 @@
         <property name="targetDataSource" ref="unsafeDataSource"/>
     </bean>
 
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="lazyConnectionDataSource"/>
+    </bean>
+
     <util:list id="annotatedClasses">
         <value>org.hslp.common.PersistentObject</value>
     </util:list>
