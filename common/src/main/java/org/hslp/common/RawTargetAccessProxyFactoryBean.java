@@ -36,7 +36,6 @@ public class RawTargetAccessProxyFactoryBean extends ProxyFactoryBean {
 
         ProxyFactory proxyFactory = new ProxyFactory(originalProxy);
         proxyFactory.setProxyTargetClass(true);
-        proxyFactory.setInterfaces(getProxiedInterfaces());
         proxyFactory.addInterface(RawTargetAccessInfrastructureProxy.class);
 
         // обработчик RawTargetAccessInfrastructureProxy.getWrappedObject()
