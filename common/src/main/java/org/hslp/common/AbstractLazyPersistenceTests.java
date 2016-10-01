@@ -13,6 +13,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.support.TransactionTemplate;
 
@@ -20,6 +21,7 @@ import org.springframework.transaction.support.TransactionTemplate;
  * @author Maxim Butov
  */
 @RunWith(SpringJUnit4ClassRunner.class)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public abstract class AbstractLazyPersistenceTests {
 
     @Autowired
@@ -57,7 +59,11 @@ public abstract class AbstractLazyPersistenceTests {
 
     @Test
     public void testContextLoaded() throws Throwable {
-        // nothing
+        Assert.assertNotNull(unsafeDataSource);
+        Assert.assertNotNull(lazyDataSource);
+        Assert.assertNotNull(jdbcTemplate);
+        Assert.assertNotNull(hibernateOperations);
+        Assert.assertNotNull(transactionTemplate);
     }
 
     @Test
@@ -70,13 +76,18 @@ public abstract class AbstractLazyPersistenceTests {
         jdbcTemplate.execute(Connection::getMetaData);
     }
 
-    @Test
+    @Test(expected = Throwable.class)
     public void testEmptySession() throws Throwable {
         hibernateOperations.doInHibernate(session -> null);
     }
 
-    @Test
+    @Test(expected = Throwable.class)
     public void testEmptyTransaction() throws Throwable {
+        transactionTemplate.execute(status -> null);
+    }
+
+    @Test(expected = Throwable.class)
+    public void testEmptySessionInTransaction() throws Throwable {
         transactionTemplate.execute(status -> hibernateOperations.doInHibernate(session -> null));
     }
 
