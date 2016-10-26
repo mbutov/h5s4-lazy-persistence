@@ -34,7 +34,6 @@ public class RawTargetAccessProxyFactoryBean extends ProxyFactoryBean {
             && InfrastructureProxy.class.equals(method.getDeclaringClass());
     }
 
-
     /**
      * Обработчик {@link InfrastructureProxy#getWrappedObject}.
      */
@@ -53,7 +52,7 @@ public class RawTargetAccessProxyFactoryBean extends ProxyFactoryBean {
         Object original = super.getProxy(aopProxy);
 
         ProxyFactory proxyFactory = new ProxyFactory(original);
-
+        proxyFactory.setProxyTargetClass(true);
         proxyFactory.addInterface(InfrastructureProxy.class);
         proxyFactory.addInterface(RawTargetAccess.class);
 
