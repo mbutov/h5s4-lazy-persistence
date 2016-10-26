@@ -13,6 +13,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.support.TransactionTemplate;
 
@@ -20,6 +21,7 @@ import org.springframework.transaction.support.TransactionTemplate;
  * @author Maxim Butov
  */
 @RunWith(SpringJUnit4ClassRunner.class)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public abstract class AbstractLazyPersistenceTests {
 
     @Autowired
