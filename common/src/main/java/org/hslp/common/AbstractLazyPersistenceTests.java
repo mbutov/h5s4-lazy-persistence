@@ -59,7 +59,11 @@ public abstract class AbstractLazyPersistenceTests {
 
     @Test
     public void testContextLoaded() throws Throwable {
-        // nothing
+        Assert.assertNotNull(unsafeDataSource);
+        Assert.assertNotNull(lazyDataSource);
+        Assert.assertNotNull(jdbcTemplate);
+        Assert.assertNotNull(hibernateOperations);
+        Assert.assertNotNull(transactionTemplate);
     }
 
     @Test
@@ -72,13 +76,18 @@ public abstract class AbstractLazyPersistenceTests {
         jdbcTemplate.execute(Connection::getMetaData);
     }
 
-    @Test
+    @Test(expected = Throwable.class)
     public void testEmptySession() throws Throwable {
         hibernateOperations.doInHibernate(session -> null);
     }
 
-    @Test
+    @Test(expected = Throwable.class)
     public void testEmptyTransaction() throws Throwable {
+        transactionTemplate.execute(status -> null);
+    }
+
+    @Test(expected = Throwable.class)
+    public void testEmptySessionInTransaction() throws Throwable {
         transactionTemplate.execute(status -> hibernateOperations.doInHibernate(session -> null));
     }
 
