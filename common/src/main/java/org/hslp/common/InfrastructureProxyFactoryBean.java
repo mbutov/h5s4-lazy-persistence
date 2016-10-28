@@ -11,27 +11,21 @@ import org.springframework.aop.framework.ProxyFactoryBean;
 import org.springframework.core.InfrastructureProxy;
 
 /**
- * Расширение {@link ProxyFactoryBean}, добавляющее к прокси интерфейсы {@link InfrastructureProxy} и
- * {@link RawTargetAccess}.
- *
- * <p>По контракту необходимо, чтобы {@code InfrastructureProxy} возвращал оригинальный объект ({@code target}).
- * Однако, используемая фабрикой {@link org.springframework.aop.framework.JdkDynamicAopProxy реализация}
- * выполняет подмену значения ({@code target} -> {@code proxy}) в случае, когда обработчик прокси возвращает {@code target}.
- * {@link RawTargetAccess} указывает, что для методов данного интерфейса подмены выполнять не требуется.</p>
+ * Расширение {@link ProxyFactoryBean}, добавляющее к прокси интерфейс и реализацию {@link InfrastructureProxy}.
  *
  * Нужно в тех случаях, когда target object используется для внешней синхронизации, например для
  * data source или session factory.
  *
  * @author Maxim Butov
  */
-public class RawTargetAccessProxyFactoryBean extends ProxyFactoryBean {
+public class InfrastructureProxyFactoryBean extends ProxyFactoryBean {
 
     /**
      * Является ли метод {@link InfrastructureProxy#getWrappedObject}.
      */
     private static boolean isGetWrappedObjectMethod(Method method) {
         return method.getName().equals("getWrappedObject") && method.getParameterTypes().length == 0
-            && InfrastructureProxy.class.equals(method.getDeclaringClass());
+            && InfrastructureProxy.class.isAssignableFrom(method.getDeclaringClass());
     }
 
     /**
@@ -46,6 +40,19 @@ public class RawTargetAccessProxyFactoryBean extends ProxyFactoryBean {
 
     };
 
+    /**
+     * <p>По контракту необходимо, чтобы {@code InfrastructureProxy} возвращал оригинальный объект ({@code target}).
+     * Однако, используемая фабрикой {@link org.springframework.aop.framework.JdkDynamicAopProxy реализация}
+     * выполняет подмену значения ({@code target} -> {@code proxy}) в случае, когда обработчик прокси возвращает {@code target}.
+     * {@link RawTargetAccess} указывает, что для методов данного интерфейса подмены выполнять не требуется.</p>
+     */
+    public interface RawTargetAccessInfrastructureProxy extends InfrastructureProxy, RawTargetAccess {
+
+        @Override
+        Object getWrappedObject();
+
+    }
+
     @Override
     protected Object getProxy(AopProxy aopProxy) {
 
@@ -53,8 +60,7 @@ public class RawTargetAccessProxyFactoryBean extends ProxyFactoryBean {
 
         ProxyFactory proxyFactory = new ProxyFactory(original);
         proxyFactory.setProxyTargetClass(true);
-        proxyFactory.addInterface(InfrastructureProxy.class);
-        proxyFactory.addInterface(RawTargetAccess.class);
+        proxyFactory.addInterface(RawTargetAccessInfrastructureProxy.class);
 
         proxyFactory.addAdvice(getWrappedObjectMethodInterceptor);
 

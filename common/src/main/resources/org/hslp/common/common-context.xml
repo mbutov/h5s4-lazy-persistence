@@ -36,7 +36,7 @@
         <prop key="#{T(org.hibernate.cfg.AvailableSettings).HBM2DDL_AUTO}">create</prop>
     </util:properties>
 
-    <bean id="lazySessionFactory" class="org.hslp.common.RawTargetAccessProxyFactoryBean">
+    <bean id="lazySessionFactory" class="org.hslp.common.InfrastructureProxyFactoryBean">
         <property name="targetSource">
             <bean class="org.springframework.aop.target.LazyInitTargetSource">
                 <property name="targetBeanName">
